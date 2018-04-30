@@ -3,11 +3,12 @@
     <!-- Here goes the background choosing menu -->
     <img id="background" v-bind:src="background">
     <div class="backgrounds">
-      <h2>Choose the Background</h2>
+      <h2>Background</h2>
       <ul>
          <li v-for="bg in backgrounds" v-bind:key="bg.Name">
            <BackgroundCard :title="bg.Name" v-on:click="changeBackground(bg)"></BackgroundCard>
          </li>
+         <li></li>
       </ul>
     </div>
     <div>
@@ -27,6 +28,7 @@ export default {
   data() {
     return {
       msg: "Welcome to Your Vue.js App",
+      global_volume: 0.4,
       backgrounds: [
         {'Name':'City','Image':'city.jpg','Sound':'city.mp3'},
         {'Name':'Field','Image':'field.jpg','Sound':'field.mp3'}
@@ -43,7 +45,7 @@ export default {
         this.audio = null
       }
       this.audio = new Audio(require('../assets/' + bg.Sound))
-      this.audio.volume = 0.2
+      this.audio.volume = this.global_volume
       this.audio.play()
     }
   }
