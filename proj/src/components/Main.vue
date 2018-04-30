@@ -28,15 +28,23 @@ export default {
     return {
       msg: "Welcome to Your Vue.js App",
       backgrounds: [
-        {'Name':'City','Path':'city.jpg'},
-        {'Name':'Field','Path':'field.jpg'}
+        {'Name':'City','Image':'city.jpg','Sound':'city.mp3'},
+        {'Name':'Field','Image':'field.jpg','Sound':'field.mp3'}
       ],
-      background: require('../assets/placeholder.png')
+      background: require('../assets/placeholder.png'),
+      audio: null
     };
   },
   methods: {
     changeBackground(bg){
-      this.background = require('../assets/' + bg.Path)
+      this.background = require('../assets/' + bg.Image)
+      if(this.audio != null){
+        this.audio.pause()
+        this.audio = null
+      }
+      this.audio = new Audio(require('../assets/' + bg.Sound))
+      this.audio.volume = 0.2
+      this.audio.play()
     }
   }
 };
