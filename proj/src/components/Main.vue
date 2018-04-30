@@ -1,11 +1,12 @@
 <template>
   <div class="main">
     <!-- Here goes the background choosing menu -->
+    <img id="background" v-bind:src="background">
     <div class="backgrounds">
       <h2>Choose the Background</h2>
       <ul>
          <li v-for="bg in backgrounds" v-bind:key="bg.Name">
-           <BackgroundCard :title="bg.Name" v-on:click="changeBg(bg)"></BackgroundCard>
+           <BackgroundCard :title="bg.Name" v-on:click="changeBackground(bg)"></BackgroundCard>
          </li>
       </ul>
     </div>
@@ -17,6 +18,7 @@
 
 <script>
 import BackgroundCard from './BackgroundCard.vue';
+import image from '../assets/city.jpg';
 export default {
   name: "Main",
   components: {
@@ -26,14 +28,15 @@ export default {
     return {
       msg: "Welcome to Your Vue.js App",
       backgrounds: [
-        {'Name':'City','Path':'../assets/field.jpg'},
-        {'Name':'Fields','Path':'../assets/city.jpg'}
-      ]
+        {'Name':'City','Path':'city.jpg'},
+        {'Name':'Field','Path':'field.jpg'}
+      ],
+      background: require('../assets/placeholder.png')
     };
   },
   methods: {
-    changeBg(bg){
-      console.log(bg.Name)
+    changeBackground(bg){
+      this.background = require('../assets/' + bg.Path)
     }
   }
 };
@@ -43,18 +46,35 @@ export default {
 <style>
 body{
   background-color:rgb(236, 236, 236);
+  margin: 0px;
 }
 </style>
 <style scoped>
 .main {
   text-align: center;
+  height:100vh;
+  width:100%;
+  background-repeat: no-repeat;
+}
+
+#background{
+  left:0;
+  top:0;
+  right:0;
+  left:0;
+  width:100%;
+  min-width:1000px;
+  min-height:700px;
+  height:100%;
+  position: absolute;
+  z-index: -1;
 }
 
 .backgrounds {
   background-color: rgb(156, 156, 156);
   margin-left: auto;
-  margin-right: 50px;
-  margin-top: 0px;
+  margin-right: 10px;
+  margin-top: 10px;
   min-width: 500px;
   max-width: 30%;
   border: solid;
