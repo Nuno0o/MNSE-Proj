@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <!-- Here goes the background choosing menu -->
-    <img id="background" v-bind:src="background">
+    <img id="background" v-bind:src="background_image">
     <div class="backgrounds">
       <h2>Background</h2>
       <ul>
@@ -19,7 +19,6 @@
 
 <script>
 import BackgroundCard from './BackgroundCard.vue';
-import image from '../assets/city.jpg';
 export default {
   name: "Main",
   components: {
@@ -27,26 +26,25 @@ export default {
   },
   data() {
     return {
-      msg: "Welcome to Your Vue.js App",
-      global_volume: 0.4,
+      background_audio: null,
+      background_volume: 0.4,
       backgrounds: [
         {'Name':'City','Image':'city.jpg','Sound':'city.mp3'},
         {'Name':'Field','Image':'field.jpg','Sound':'field.mp3'}
       ],
-      background: require('../assets/placeholder.png'),
-      audio: null
+      background_image: require('../assets/placeholder.png'),
     };
   },
   methods: {
     changeBackground(bg){
-      this.background = require('../assets/' + bg.Image)
-      if(this.audio != null){
-        this.audio.pause()
-        this.audio = null
+      this.background_image = require('../assets/' + bg.Image)
+      if(this.background_audio != null){
+        this.background_audio.pause()
+        this.background_audio = null
       }
-      this.audio = new Audio(require('../assets/' + bg.Sound))
-      this.audio.volume = this.global_volume
-      this.audio.play()
+      this.background_audio = new Audio(require('../assets/' + bg.Sound))
+      this.background_audio.volume = this.background_volume
+      this.background_audio.play()
     }
   }
 };
