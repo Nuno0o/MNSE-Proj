@@ -1,8 +1,11 @@
 <template>
   <div class="main">
     <!-- Here goes the background choosing menu -->
+    <button id="toggle" @click="toggle">Toggle Interface</button>
+    <!-- Background image -->
     <img id="background" v-bind:src="background_image">
-    <div class="backgrounds">
+    <!-- Background interface -->
+    <div class="interface backgrounds">
       <h2>Background</h2>
       <ul>
          <li v-for="bg in backgrounds" v-bind:key="bg.Name">
@@ -26,6 +29,7 @@ export default {
   },
   data() {
     return {
+      show_interface: true,
       background_audio: null,
       background_volume: 0.4,
       backgrounds: [
@@ -45,6 +49,14 @@ export default {
       this.background_audio = new Audio(require('../assets/' + bg.Sound))
       this.background_audio.volume = this.background_volume
       this.background_audio.play()
+    },
+    toggle () {
+      if (this.show_interface) {
+        $('.interface').css('visibility','hidden')
+      }else{
+        $('.interface').css('visibility','visible')
+      }
+      this.show_interface = !this.show_interface;
     }
   }
 };
@@ -63,6 +75,22 @@ body{
   height:100vh;
   width:100%;
   background-repeat: no-repeat;
+}
+
+#toggle {
+  text-align:right;
+  float:left;
+  margin-left:10px;
+  background-color:rgb(255, 255, 255);
+  padding:10px;
+  border:solid;
+  border-color: green;
+  border-width: 2px;
+  border-radius: 30px;
+}
+
+#toggle:hover {
+  background-color:rgb(201, 201, 201);
 }
 
 #background{
