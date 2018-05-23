@@ -13,6 +13,8 @@
          </li>
          <li></li>
       </ul>
+      <h2>Volume</h2>
+      <VolumeSlider id="volume-slider"></VolumeSlider>
     </div>
     <div>
 
@@ -22,10 +24,12 @@
 
 <script>
 import BackgroundCard from './BackgroundCard.vue';
+import VolumeSlider from './VolumeSlider.vue';
 export default {
   name: "Main",
   components: {
-    BackgroundCard
+    BackgroundCard,
+    VolumeSlider
   },
   data() {
     return {
@@ -93,7 +97,7 @@ body{
   background-color:rgb(201, 201, 201);
 }
 
-#background{
+#background {
   left:0;
   top:0;
   right:0;
@@ -132,5 +136,10 @@ li {
   margin: auto;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+#volume-slider {
+  position: relative;
+  left: 100px;
 }
 </style>
