@@ -4,9 +4,6 @@
     <button id="toggle" @click="toggle">Toggle Interface</button>
     <!-- Background image -->
     <img v-if="background_image != null" id="background" v-bind:src="background_image">
-    <video v-if="background_video != null" id="background" width="320" height="240"  autoplay muted loop>
-      <source src="background_video" type="video/mp4">
-    </video>
     <div v-for="asset in active_assets" v-bind:key="asset.Name">
       <img class="asset-image" v-bind:src="require('../assets/' + asset.Image)" />
     </div>
@@ -60,7 +57,6 @@ export default {
       volume: 0.5,
       active_background: {},
       background_image: require('../assets/placeholder.png'),
-      background_video: null,
       active_assets: [],
       active_audio: []
     };
