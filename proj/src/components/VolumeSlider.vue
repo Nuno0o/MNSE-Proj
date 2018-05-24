@@ -1,85 +1,119 @@
 <template>
-   <input class="range blue" type="range" min="0" max="100" value="50"/>
+   <input class="volume" type="range" min="0" max="100" value="50" @input="onChange"/>
 </template>
 
 <script>
 export default {
-  name: "VolumeSlider"
+  name: "VolumeSlider",
+  methods: {
+    onChange({target}) {
+      this.$emit('input', target.value)
+    }
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.range {
+
+/* --- HIDE DEFAULT APPEARANCE --- */
+
+.volume {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 200px; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+.volume:focus {
+  outline: none; /* Removes the blue border. */
+}
+
+
+/* --- CHROME --- */
+
+.volume::-webkit-slider-thumb {
   -webkit-appearance: none;
-  -moz-appearance: none;
-  width: 200px;
-  margin-top: 10px;
-  transform: translate(-50%, -50%);
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-  -webkit-appearance: none;
-  background: rgba(59,173,227,1);
-  background: -moz-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(59,173,227,1)), color-stop(25%, rgba(87,111,230,1)), color-stop(51%, rgba(152,68,183,1)), color-stop(100%, rgba(255,53,127,1)));
-  background: -webkit-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -o-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -ms-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
-  height: 2px;
-}
-
-input[type=range]:focus {
-  outline: none;
-}
-
-input[type=range]::-moz-range-track {
-  -moz-appearance: none;
-  background: rgba(59,173,227,1);
-  background: -moz-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(59,173,227,1)), color-stop(25%, rgba(87,111,230,1)), color-stop(51%, rgba(152,68,183,1)), color-stop(100%, rgba(255,53,127,1)));
-  background: -webkit-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -o-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: -ms-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  background: linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
-  height: 2px;
-}
-
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  border: 2px solid;
-  border-radius: 50%;
+  border: 2px solid white;
   height: 25px;
   width: 25px;
-  max-width: 80px;
-  position: relative;
-  bottom: 11px;
-  background-color: #1d1c25;
-  cursor: -webkit-grab;
-
-  -webkit-transition: border 1000ms ease;
-  transition: border 1000ms ease;
+  border-radius: 50%;
+  background: black;
+  cursor: pointer;
+  margin-top: -9px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
 }
 
-input[type=range]::-moz-range-thumb {
-  -moz-appearance: none;
-  border: 2px solid;
-  border-radius: 50%;
+.volume::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: rgb(13,0,82);
+  background: -webkit-linear-gradient(90deg, rgba(13,0,82,1) 0%, rgba(18,244,241,1) 100%);
+  background: linear-gradient(90deg, rgba(13,0,82,1) 0%, rgba(18,244,241,1) 100%);
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+
+/* --- FIREFOX --- */
+
+.volume::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 2px solid white;
   height: 25px;
   width: 25px;
-  max-width: 80px;
-  position: relative;
-  bottom: 11px;
-  background-color: #1d1c25;
-  cursor: -moz-grab;
-  -moz-transition: border 1000ms ease;
-  transition: border 1000ms ease;
+  border-radius: 50%;
+  background: black;
+  cursor: pointer;
 }
 
-.range.blue::-webkit-slider-thumb {
-   border-color: white;
+.volume::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: rgb(13,0,82);
+  background: -moz-linear-gradient(90deg, rgba(13,0,82,1) 0%, rgba(18,244,241,1) 100%);
+  background: linear-gradient(90deg, rgba(13,0,82,1) 0%, rgba(18,244,241,1) 100%);
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+
+/* --- IE --- */
+
+.volume::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 2px solid white;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background: black;
+  cursor: pointer;
+}
+
+.volume::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+
+.volume::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+.volume::-ms-fill-upper {
+  background: #3071a9;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 }
 </style>

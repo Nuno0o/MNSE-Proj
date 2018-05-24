@@ -14,7 +14,7 @@
          <li></li>
       </ul>
       <h2>Volume</h2>
-      <VolumeSlider id="volume-slider"></VolumeSlider>
+      <VolumeSlider id="volume-slider" @input="changeVolume"></VolumeSlider>
     </div>
     <div>
 
@@ -35,18 +35,22 @@ export default {
     return {
       show_interface: true,
       background_audio: null,
-      background_volume: 0.4,
+      background_volume: 0.5,
       backgrounds: [
         {'Name':'City','Image':'city.jpg','Sound':'street.mp3'},
         {'Name':'Field','Image':'field.jpg','Sound':'field.mp3'},
         {'Name':'Beach','Image':'beach.jpg','Sound':'beach.mp3'},
-        {'Name':'Forest','Image':'birds.jpg','Sound':'birds.mp3'},
+        {'Name':'Birds','Image':'birds.jpg','Sound':'birds.mp3'},
         {'Name':'Forest','Image':'forest.jpg','Sound':'rain.mp3'}
       ],
       background_image: require('../assets/placeholder.png'),
     };
   },
   methods: {
+    changeVolume(volume) {
+      this.background_volume = volume / 100.0
+      this.background_audio.volume = this.background_volume
+    },
     changeBackground(bg){
       this.background_image = require('../assets/' + bg.Image)
       if(this.background_audio != null){
@@ -54,6 +58,7 @@ export default {
         this.background_audio = null
       }
       this.background_audio = new Audio(require('../assets/' + bg.Sound))
+      this.c = this.background_volume
       this.background_audio.volume = this.background_volume
       this.background_audio.play()
     },
@@ -142,7 +147,6 @@ li {
 }
 
 #volume-slider {
-  position: relative;
-  left: 100px;
+  margin-bottom: 20px;
 }
 </style>
