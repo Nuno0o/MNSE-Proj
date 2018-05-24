@@ -3,8 +3,11 @@
     <!-- Here goes the background choosing menu -->
     <button id="toggle" @click="toggle">Toggle Interface</button>
     <!-- Background image -->
-    <img id="background" v-bind:src="background_image">
-    <div v-for="asset in active_assets" v-bind:key="asset">
+    <img v-if="background_image != null" id="background" v-bind:src="background_image">
+    <video v-if="background_video != null" id="background" width="320" height="240"  autoplay muted loop>
+      <source src="background_video" type="video/mp4">
+    </video>
+    <div v-for="asset in active_assets" v-bind:key="asset.Name">
       <img class="asset-image" v-bind:src="require('../assets/' + asset.Image)" />
     </div>
     <!-- Background interface -->
@@ -20,7 +23,7 @@
     <div class="interface secondary-backgrounds">
         <h2>Assets</h2>
         <ul>
-          <li v-for="asset in active_background.Assets" v-bind:key="asset">
+          <li v-for="asset in active_background.Assets" v-bind:key="asset.Name">
            <BackgroundCard :title="asset.Name" v-on:click="clickAsset(asset)"></BackgroundCard>
          </li>
         </ul>
@@ -43,20 +46,21 @@ export default {
   },
   data() {
     return {
-      visibility: 'hidden',
-      show_interface: true,
-      volume: 0.5,
-      active_background: {},
       backgrounds: [
         {'Name':'City','Image':'city.jpg','Sound':'city.mp3', 'Assets': [
           {'Name': 'Rain', 'Image': 'rain.gif', 'Sound': 'rain.mp3'},
           {'Name': 'Birds', 'Sound': 'birds.mp3'}]},
         {'Name':'Field','Image':'field.jpg','Sound':'field.mp3'},
         {'Name':'Beach','Image':'beach.jpg','Sound':'beach.mp3'},
-        {'Name':'Birds','Image':'birds.jpg','Sound':'birds.mp3'},
-        {'Name':'Forest','Image':'forest.jpg', 'Sound': null}
+        {'Name':'Forest','Image':'forest.jpg', 'Sound': null, 'Assets': [
+          {'Name': 'Birds', 'Image': null, 'Sound': 'birds.mp3'},
+        ]}
       ],
+      show_interface: true,
+      volume: 0.5,
+      active_background: {},
       background_image: require('../assets/placeholder.png'),
+      background_video: null,
       active_assets: [],
       active_audio: []
     };
