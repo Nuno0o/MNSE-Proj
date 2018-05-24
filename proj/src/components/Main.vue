@@ -21,7 +21,7 @@
         <h2>Assets</h2>
         <ul>
           <li v-for="asset in active_background.Assets" v-bind:key="asset">
-           <BackgroundCard :title="asset.Name" v-on:click="changeAsset(asset)"></BackgroundCard>
+           <BackgroundCard :title="asset.Name" v-on:click="clickAsset(asset)"></BackgroundCard>
          </li>
         </ul>
     </div>
@@ -48,12 +48,13 @@ export default {
       volume: 0.5,
       active_background: {},
       backgrounds: [
-        {'Name':'City','Image':'city.jpg','Sound':'street.mp3', 'Assets': [
-          {'Name': 'Rain', 'Image': 'rain.gif', 'Sound': 'rain.mp3'}]},
+        {'Name':'City','Image':'city.jpg','Sound':'city.mp3', 'Assets': [
+          {'Name': 'Rain', 'Image': 'rain.gif', 'Sound': 'rain.mp3'},
+          {'Name': 'Birds', 'Sound': 'birds.mp3'}]},
         {'Name':'Field','Image':'field.jpg','Sound':'field.mp3'},
         {'Name':'Beach','Image':'beach.jpg','Sound':'beach.mp3'},
         {'Name':'Birds','Image':'birds.jpg','Sound':'birds.mp3'},
-        {'Name':'Forest','Image':'forest.jpg','Sound':'null'}
+        {'Name':'Forest','Image':'forest.jpg', 'Sound': null}
       ],
       background_image: require('../assets/placeholder.png'),
       active_assets: [],
@@ -72,59 +73,92 @@ export default {
         elem.Audio.volume = this.volume
       }.bind(this))
     },
-    changeAsset(asset) {
-      var found = this.active_assets.find(function(elem) {
-        return elem.Name == asset.Name
-      })
+    playAudio(filename) {
 
-      if (found == undefined)
-      {
-        this.active_assets.push(asset)
-      } else {
-        var index = this.active_assets.indexOf(found)
-        this.active_assets.splice(index, 1)
-      }
+        // invalid filename
+        if (filename == undefined || filename == null || filename == 'null') {
+          return;
+        }
 
-      if (asset.Sound != undefined && asset.Sound != null) {
-
-        var found_audio = this.active_audio.find(function(elem) {
-          return elem.Name == asset.Sound
+        // check if audio is already active
+        var found = this.active_audio.find(function(elem) {
+          return elem.Name == filename
         })
 
-        if (found_audio == undefined)
-        {
-          var audio = new Audio(require('../assets/' + asset.Sound)) 
+        // audio is NOT active
+        if (found == undefined) {
+
+          // create plauer
+          var audio = new Audio(require('../assets/' + filename)) 
+
+          // loop audio
           audio.addEventListener('ended', function() {
               this.currentTime = 0;
               this.play();
           }, false);
+
+          // set volume to actual value
           audio.volume = this.volume
-          this.active_audio.push({'Name': asset.Sound, 'Audio': audio});
+
+          // add audio to active list and playt it
+          this.active_audio.push({'Name': filename, 'Audio': audio});
           audio.play();
         }
+
+        // audio IS already active
         else {
-          var index_audio = this.active_audio.indexOf(found_audio)
-          this.active_audio[index_audio].Audio.pause()
-          this.active_audio.splice(index_audio, 1)
+
+          // get audio index
+          var index = this.active_audio.indexOf(found)
+
+          // pause audio and remove it from the active list
+          if (index >= 0) {
+            this.active_audio[index].Audio.pause()
+            this.active_audio.splice(index, 1)
+          }          
+        }
+    },
+    clickAsset(asset) {
+
+      // check if asset is already active
+      var found = this.active_assets.find(function(elem) {
+        return elem.Name == asset.Name
+      })
+
+      // asset is NOT active
+      if (found == undefined && asset.Image != undefined && asset.Image != null && asset.Image != 'null')
+      {
+        // add asset to active list
+        this.active_assets.push(asset)
+      }
+      
+      // asset IS already active
+      else {
+        // remove asset from active list
+        var index = this.active_assets.indexOf(found)
+        if (index >= 0) {
+          this.active_assets.splice(index, 1)
         }
       }
+
+      // play asset's audio
+      this.playAudio(asset.Sound)
     },
     changeBackground(bg){
+
+      // reset active assets
       this.active_assets = []
+
+      // pause and reset active audios
       this.active_audio.forEach(function(elem) {
         elem.Audio.pause()
       })
       this.active_audio = []
-      if (bg.Sound != undefined && bg.Sound != null) {
-        var audio = new Audio(require('../assets/' + bg.Sound)) 
-        audio.addEventListener('ended', function() {
-            this.currentTime = 0;
-            this.play();
-        }, false);
-        audio.volume = this.volume
-        this.active_audio.push({'Name': bg.Sound, 'Audio': audio});
-        audio.play();
-      }
+      
+      // play audio from this background
+      this.playAudio(bg.Sound)
+
+      // set background as active
       this.active_background = bg
       this.background_image = require('../assets/' + bg.Image)     
     },
