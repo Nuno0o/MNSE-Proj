@@ -58,7 +58,6 @@ export default {
         this.background_audio = null
       }
       this.background_audio = new Audio(require('../assets/' + bg.Sound))
-      this.c = this.background_volume
       this.background_audio.volume = this.background_volume
       this.background_audio.play()
     },
