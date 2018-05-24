@@ -45,11 +45,11 @@ export default {
     return {
       visibility: 'hidden',
       show_interface: true,
-      background_audio: null,
-      background_volume: 0.5,
+      volume: 0.5,
       active_background: {},
       backgrounds: [
-        {'Name':'City','Image':'city.jpg','Sound':'street.mp3', 'Assets': [{'Name': 'Rain', 'Image': 'rain.gif', 'Sound': 'rain.mp3'}]},
+        {'Name':'City','Image':'city.jpg','Sound':'street.mp3', 'Assets': [
+          {'Name': 'Rain', 'Image': 'rain.gif', 'Sound': 'rain.mp3'}]},
         {'Name':'Field','Image':'field.jpg','Sound':'field.mp3'},
         {'Name':'Beach','Image':'beach.jpg','Sound':'beach.mp3'},
         {'Name':'Birds','Image':'birds.jpg','Sound':'birds.mp3'},
@@ -57,6 +57,7 @@ export default {
       ],
       background_image: require('../assets/placeholder.png'),
       active_assets: [],
+      active_audio: []
     };
   },
   computed: {
@@ -66,8 +67,10 @@ export default {
   },
   methods: {
     changeVolume(volume) {
-      this.background_volume = volume / 100.0
-      this.background_audio.volume = this.background_volume
+      this.volume = volume / 100.0
+      this.active_audio.forEach(function(elem) {
+        elem.Audio.volume = this.volume
+      }.bind(this))
     },
     changeAsset(asset) {
       var found = this.active_assets.find(function(elem) {
@@ -82,33 +85,48 @@ export default {
         this.active_assets.splice(index, 1)
       }
 
-      console.log(this.active_assets)
+      if (asset.Sound != undefined && asset.Sound != null) {
 
-      if(this.background_audio != null){
-        this.background_audio.pause()
-        this.background_audio = null
+        var found_audio = this.active_audio.find(function(elem) {
+          return elem.Name == asset.Sound
+        })
+
+        if (found_audio == undefined)
+        {
+          var audio = new Audio(require('../assets/' + asset.Sound)) 
+          audio.addEventListener('ended', function() {
+              this.currentTime = 0;
+              this.play();
+          }, false);
+          audio.volume = this.volume
+          this.active_audio.push({'Name': asset.Sound, 'Audio': audio});
+          audio.play();
+        }
+        else {
+          var index_audio = this.active_audio.indexOf(found_audio)
+          this.active_audio[index_audio].Audio.pause()
+          this.active_audio.splice(index_audio, 1)
+        }
       }
-      if (asset.Sound != 'null' && asset.Sound != undefined)
-      {
-        this.background_audio = new Audio(require('../assets/' + asset.Sound))
-        this.background_audio.volume = this.background_volume
-        this.background_audio.play()
-      }   
     },
     changeBackground(bg){
       this.active_assets = []
-      this.active_background = bg
-      this.background_image = require('../assets/' + bg.Image)
-      if(this.background_audio != null){
-        this.background_audio.pause()
-        this.background_audio = null
+      this.active_audio.forEach(function(elem) {
+        elem.Audio.pause()
+      })
+      this.active_audio = []
+      if (bg.Sound != undefined && bg.Sound != null) {
+        var audio = new Audio(require('../assets/' + bg.Sound)) 
+        audio.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        audio.volume = this.volume
+        this.active_audio.push({'Name': bg.Sound, 'Audio': audio});
+        audio.play();
       }
-      if (bg.Sound != 'null' && bg.Sound != undefined)
-      {
-        this.background_audio = new Audio(require('../assets/' + bg.Sound))
-        this.background_audio.volume = this.background_volume
-        this.background_audio.play()
-      }      
+      this.active_background = bg
+      this.background_image = require('../assets/' + bg.Image)     
     },
     toggle () {
       if (this.show_interface) {
