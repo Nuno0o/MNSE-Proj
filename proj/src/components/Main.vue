@@ -37,8 +37,11 @@ export default {
       background_audio: null,
       background_volume: 0.4,
       backgrounds: [
-        {'Name':'City','Image':'city.jpg','Sound':'city.mp3'},
-        {'Name':'Field','Image':'field.jpg','Sound':'field.mp3'}
+        {'Name':'City','Image':'city.jpg','Sound':'street.mp3'},
+        {'Name':'Field','Image':'field.jpg','Sound':'field.mp3'},
+        {'Name':'Beach','Image':'beach.jpg','Sound':'beach.mp3'},
+        {'Name':'Forest','Image':'birds.jpg','Sound':'birds.mp3'},
+        {'Name':'Forest','Image':'forest.jpg','Sound':'rain.mp3'}
       ],
       background_image: require('../assets/placeholder.png'),
     };
