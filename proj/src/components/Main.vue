@@ -50,10 +50,10 @@ export default {
           {'Name': 'Traffic', 'Sound': 'city.mp3'}]},
         {'Name':'Field','Image':'field.jpg','Sound':null, 'Assets': [
           {'Name': 'Breeze', 'Sound': 'breeze.mp3'},
+          {'Name': 'Birds', 'Sound': 'birds.mp3'},
           {'Name': 'River', 'Sound': 'river.mp3'}
         ]},
         {'Name':'Beach','Image':'beach.jpg','Sound':null, 'Assets': [
-          
           {'Name': 'Seaguls', 'Sound': 'beach.mp3'}
         ]},
         {'Name':'Forest','Image':'forest.jpg', 'Sound': null, 'Assets': [
