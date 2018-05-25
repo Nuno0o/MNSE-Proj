@@ -5,7 +5,7 @@
     <!-- Background image -->
     <img v-if="background_image != null" id="background" v-bind:src="background_image">
     <div v-for="asset in active_assets" v-bind:key="asset.Name">
-      <img class="asset-image" v-bind:src="require('../assets/' + asset.Image)" />
+      <img class="asset-image" :id="asset.Name" v-bind:src="require('../assets/' + asset.Image)" />
     </div>
     <!-- Background interface -->
     <div class="interface backgrounds">
@@ -147,7 +147,6 @@ export default {
           this.active_assets.splice(index, 1)
         }
       }
-
       // play asset's audio
       this.playAudio(asset.Sound)
     },
