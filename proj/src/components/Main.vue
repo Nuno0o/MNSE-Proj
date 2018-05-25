@@ -44,13 +44,20 @@ export default {
   data() {
     return {
       backgrounds: [
-        {'Name':'City','Image':'city.jpg','Sound':'city.mp3', 'Assets': [
+        {'Name':'City','Image':'city.jpg','Sound':null, 'Assets': [
           {'Name': 'Rain', 'Image': 'rain.gif', 'Sound': 'rain.mp3'},
-          {'Name': 'Birds', 'Sound': 'birds.mp3'}]},
-        {'Name':'Field','Image':'field.jpg','Sound':'field.mp3'},
-        {'Name':'Beach','Image':'beach.jpg','Sound':'beach.mp3'},
+          {'Name': 'Birds', 'Image': 'birds.gif', 'Sound': 'birds.mp3'},
+          {'Name': 'Traffic', 'Sound': 'city.mp3'}]},
+        {'Name':'Field','Image':'field.jpg','Sound':null, 'Assets': [
+          {'Name': 'Breeze', 'Sound': 'breeze.mp3'},
+          {'Name': 'River', 'Sound': 'river.mp3'}
+        ]},
+        {'Name':'Beach','Image':'beach.jpg','Sound':null, 'Assets': [
+          
+          {'Name': 'Seaguls', 'Sound': 'beach.mp3'}
+        ]},
         {'Name':'Forest','Image':'forest.jpg', 'Sound': null, 'Assets': [
-          {'Name': 'Birds', 'Image': null, 'Sound': 'birds.mp3'},
+          {'Name': 'Animals', 'Image': null, 'Sound': 'field.mp3'},
         ]}
       ],
       show_interface: true,
