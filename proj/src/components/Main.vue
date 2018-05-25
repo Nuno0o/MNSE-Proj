@@ -27,7 +27,11 @@
     </div>
     <div class="interface volume">
       <h2>Volume</h2>
-      <VolumeSlider id="volume-slider" @input="changeVolume"></VolumeSlider>
+      <div v-for="audio in active_audio">
+        <h3>{{audio.Name}}</h3>
+        <VolumeSlider class="volume-slider" @input="changeVolume(audio.Name, $event)"></VolumeSlider>
+        <br>
+      </div>
     </div>
   </div>
 </template>
@@ -74,14 +78,14 @@ export default {
     }
   },
   methods: {
-    changeVolume(volume) {
+    changeVolume(name, volume) {
       this.volume = volume / 100.0
       this.active_audio.forEach(function(elem) {
-        elem.Audio.volume = this.volume
+        if(elem.Name === name)
+            elem.Audio.volume = this.volume
       }.bind(this))
     },
-    playAudio(filename) {
-
+    playAudio(name, filename) {
         // invalid filename
         if (filename == undefined || filename == null || filename == 'null') {
           return;
@@ -89,7 +93,7 @@ export default {
 
         // check if audio is already active
         var found = this.active_audio.find(function(elem) {
-          return elem.Name == filename
+          return elem.Name == name
         })
 
         // audio is NOT active
@@ -108,7 +112,7 @@ export default {
           audio.volume = this.volume
 
           // add audio to active list and playt it
-          this.active_audio.push({'Name': filename, 'Audio': audio});
+          this.active_audio.push({'Name': name, 'Audio': audio});
           audio.play();
         }
 
@@ -148,7 +152,8 @@ export default {
         }
       }
       // play asset's audio
-      this.playAudio(asset.Sound)
+      this.playAudio(asset.Name, asset.Sound)
+
     },
     changeBackground(bg){
 
@@ -252,7 +257,4 @@ li {
   margin-right: 10px;
 }
 
-#volume-slider {
-  margin-bottom: 20px;
-}
 </style>
