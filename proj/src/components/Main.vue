@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       backgrounds: [
-        {'Name':'City','Image':'city.jpg','Sound':null, 'Assets': [
+        {'Name':'City','Image':'city.gif','Sound':null, 'Assets': [
           {'Name': 'Rain', 'Image': 'rain.gif', 'Sound': 'rain.mp3'},
           {'Name': 'Birds', 'Image': 'birds.gif', 'Sound': 'birds.mp3'},
           {'Name': 'Traffic', 'Sound': 'city.mp3'}]},

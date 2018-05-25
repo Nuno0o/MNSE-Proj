@@ -8,7 +8,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Main',
+      name: 'EnviroMNSE',
+      title: 'EnviroMNSE',
       component: Main
     }
   ]
