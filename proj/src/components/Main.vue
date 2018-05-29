@@ -22,7 +22,7 @@
                  :playsinline="true"
                  customEventName="customstatechangedeventname">
       </video-player>
-      <BackgroundCard :title="'Close'" v-on:click="closeVideo"></BackgroundCard>
+      <BackgroundCard style="margin-bottom:15px" :title="'Close'" v-on:click="closeVideo"></BackgroundCard>
     </div>
     <div class="interface backgrounds">
       <h2>Background</h2>
