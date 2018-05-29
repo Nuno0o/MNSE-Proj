@@ -14,6 +14,16 @@
     <Helicopter v-if="active_assets['helicopter'] !== undefined && active_assets['helicopter'] === true"></Helicopter>
 
     <!-- Background interface -->
+    <div v-if="show_video" class="interface video">
+      <h2>How to use:</h2>
+      <video-player  class="video-player-box"
+                 ref="videoPlayer"
+                 :options="playerOptions"
+                 :playsinline="true"
+                 customEventName="customstatechangedeventname">
+      </video-player>
+      <BackgroundCard :title="'Close'" v-on:click="closeVideo"></BackgroundCard>
+    </div>
     <div class="interface backgrounds">
       <h2>Background</h2>
       <ul>
@@ -78,7 +88,20 @@ export default {
           {'Name': 'Ship', 'Image':'boat' ,'Sound': 'ship.mp3'}
         ]}
       ],
+      playerOptions: {
+          // videojs options
+          muted: true,
+          language: 'en',
+          playbackRates: [0.7, 1.0, 1.5, 2.0],
+          width: 450,
+          sources: [{
+            type: "video/mp4",
+            src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
+          }],
+          poster: "/static/images/author.jpg",
+      },
       show_interface: true,
+      show_video: true,
       volume: 0.5,
       active_background: {},
       background_image: require('../assets/placeholder.png'),
@@ -92,6 +115,9 @@ export default {
     }
   },
   methods: {
+    closeVideo() {
+      this.show_video = false
+    },
     changeVolume(name, volume) {
       this.volume = volume / 100.0
       this.active_audio.forEach(function(elem) {
@@ -229,6 +255,13 @@ body{
   height:100%;
   position: absolute;
   z-index: -3;
+}
+
+.video-player-box{
+  text-align:center;
+  margin:auto;
+  margin-left:30px;
+  margin-bottom:30px;
 }
 
 .interface {
