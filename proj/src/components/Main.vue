@@ -52,16 +52,13 @@ export default {
           {'Name': 'Rain', 'Image': 'rain.gif', 'Sound': 'rain.mp3'},
           {'Name': 'Birds', 'Image': 'birds.gif', 'Sound': 'birds.mp3'},
           {'Name': 'Traffic', 'Sound': 'city.mp3'}]},
-        {'Name':'Field','Image':'field.jpg','Sound':null, 'Assets': [
+        {'Name':'Field','Image':'field.gif','Sound':null, 'Assets': [
           {'Name': 'Breeze', 'Sound': 'breeze.mp3'},
           {'Name': 'Birds', 'Sound': 'birds.mp3'},
           {'Name': 'River', 'Sound': 'river.mp3'}
         ]},
         {'Name':'Beach','Image':'beach.jpg','Sound':null, 'Assets': [
           {'Name': 'Seaguls', 'Sound': 'beach.mp3'}
-        ]},
-        {'Name':'Forest','Image':'forest.jpg', 'Sound': null, 'Assets': [
-          {'Name': 'Animals', 'Image': null, 'Sound': 'field.mp3'},
         ]}
       ],
       show_interface: true,
