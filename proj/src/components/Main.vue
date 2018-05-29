@@ -13,6 +13,8 @@
 
     <Helicopter v-if="active_assets['helicopter'] !== undefined && active_assets['helicopter'] === true"></Helicopter>
 
+    <Seagulls v-if="active_assets['seagulls'] !== undefined && active_assets['seagulls'] === true"></Seagulls>
+
     <!-- Background interface -->
     <div v-if="show_video" class="interface video">
       <h2>How to use:</h2>
@@ -59,6 +61,7 @@ import Rain from './assets/Rain.vue';
 import Birds from './assets/Birds.vue';
 import Boat from './assets/Boat.vue';
 import Helicopter from './assets/Helicopter.vue';
+import Seagulls from './assets/Seagulls.vue';
 export default {
   name: "Main",
   components: {
@@ -67,7 +70,8 @@ export default {
     Rain,
     Birds,
     Boat,
-    Helicopter
+    Helicopter,
+    Seagulls
   },
   data() {
     return {
@@ -84,7 +88,7 @@ export default {
           {'Name': 'River', 'Sound': 'river.mp3'}
         ]},
         {'Name':'Beach','Image':'beach.jpg','Sound':null, 'Assets': [
-          {'Name': 'Seaguls', 'Sound': 'beach.mp3'},
+          {'Name': 'Seaguls', 'Image': 'seagulls','Sound': 'beach.mp3'},
           {'Name': 'Ship', 'Image':'boat' ,'Sound': 'ship.mp3'}
         ]}
       ],
