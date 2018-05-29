@@ -3,10 +3,16 @@
     <!-- Here goes the background choosing menu -->
     <button id="toggle" @click="toggle">Toggle Interface</button>
     <!-- Background image -->
-    <img v-if="background_image != null" id="background" v-bind:src="background_image">
-    <div v-for="asset in active_assets" v-bind:key="asset.Name">
-      <img class="asset-image" :id="asset.Name" v-bind:src="require('../assets/' + asset.Image)" />
-    </div>
+    <img v-if="background_image != null" id="background" v-bind:src="background_image"/>
+
+    <Rain v-if="active_assets['rain'] !== undefined && active_assets['rain'] === true"></Rain>
+
+    <Birds v-if="active_assets['birds'] !== undefined && active_assets['birds'] === true"></Birds>
+
+    <Boat v-if="active_assets['boat'] !== undefined && active_assets['boat'] === true"></Boat>
+
+    <Helicopter v-if="active_assets['helicopter'] !== undefined && active_assets['helicopter'] === true"></Helicopter>
+
     <!-- Background interface -->
     <div class="interface backgrounds">
       <h2>Background</h2>
@@ -39,26 +45,37 @@
 <script>
 import BackgroundCard from './BackgroundCard.vue';
 import VolumeSlider from './VolumeSlider.vue';
+import Rain from './assets/Rain.vue';
+import Birds from './assets/Birds.vue';
+import Boat from './assets/Boat.vue';
+import Helicopter from './assets/Helicopter.vue';
 export default {
   name: "Main",
   components: {
     BackgroundCard,
-    VolumeSlider
+    VolumeSlider,
+    Rain,
+    Birds,
+    Boat,
+    Helicopter
   },
   data() {
     return {
       backgrounds: [
         {'Name':'City','Image':'city.gif','Sound':null, 'Assets': [
-          {'Name': 'Rain', 'Image': 'rain.gif', 'Sound': 'rain.mp3'},
-          {'Name': 'Birds', 'Image': 'birds.gif', 'Sound': 'birds.mp3'},
-          {'Name': 'Traffic', 'Sound': 'city.mp3'}]},
+          {'Name': 'Rain', 'Image': 'rain', 'Sound': 'rain.mp3'},
+          {'Name': 'Birds', 'Image': 'birds', 'Sound': 'birds.mp3'},
+          {'Name': 'Traffic', 'Sound': 'city.mp3'},
+          {'Name': 'Siren', 'Sound': 'ambulance.mp3'},
+          {'Name': 'Heli','Image':'helicopter' ,'Sound': 'helicopter.mp3'}]},
         {'Name':'Field','Image':'field.gif','Sound':null, 'Assets': [
           {'Name': 'Breeze', 'Sound': 'breeze.mp3'},
-          {'Name': 'Birds', 'Sound': 'birds.mp3'},
+          {'Name': 'Birds', 'Image': 'birds','Sound': 'birds.mp3'},
           {'Name': 'River', 'Sound': 'river.mp3'}
         ]},
         {'Name':'Beach','Image':'beach.jpg','Sound':null, 'Assets': [
-          {'Name': 'Seaguls', 'Sound': 'beach.mp3'}
+          {'Name': 'Seaguls', 'Sound': 'beach.mp3'},
+          {'Name': 'Ship', 'Image':'boat' ,'Sound': 'ship.mp3'}
         ]}
       ],
       show_interface: true,
@@ -81,6 +98,20 @@ export default {
         if(elem.Name === name)
             elem.Audio.volume = this.volume
       }.bind(this))
+    },
+    clickAsset(asset) {
+      // check if image/animation is active or not, and enable/disable it
+      if(asset.Image != undefined){
+        if(this.active_assets[asset.Image] == undefined){
+          this.active_assets[asset.Image] = true
+        } else {
+          this.active_assets[asset.Image] = !this.active_assets[asset.Image]
+        }
+      }
+      
+      // play asset's audio
+      this.playAudio(asset.Name, asset.Sound)
+
     },
     playAudio(name, filename) {
         // invalid filename
@@ -125,32 +156,6 @@ export default {
             this.active_audio.splice(index, 1)
           }          
         }
-    },
-    clickAsset(asset) {
-
-      // check if asset is already active
-      var found = this.active_assets.find(function(elem) {
-        return elem.Name == asset.Name
-      })
-
-      // asset is NOT active
-      if (found == undefined && asset.Image != undefined && asset.Image != null && asset.Image != 'null')
-      {
-        // add asset to active list
-        this.active_assets.push(asset)
-      }
-      
-      // asset IS already active
-      else {
-        // remove asset from active list
-        var index = this.active_assets.indexOf(found)
-        if (index >= 0) {
-          this.active_assets.splice(index, 1)
-        }
-      }
-      // play asset's audio
-      this.playAudio(asset.Name, asset.Sound)
-
     },
     changeBackground(bg){
 
@@ -213,7 +218,7 @@ body{
   background-color:rgb(201, 201, 201);
 }
 
-#background, .asset-image {
+#background {
   left:0;
   top:0;
   right:0;
@@ -223,7 +228,7 @@ body{
   min-height:700px;
   height:100%;
   position: absolute;
-  z-index: -1;
+  z-index: -3;
 }
 
 .interface {
