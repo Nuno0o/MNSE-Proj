@@ -78,13 +78,13 @@ export default {
       backgrounds: [
         {'Name':'City','Image':'city.gif','Sound':null, 'Assets': [
           {'Name': 'Rain', 'Image': 'rain', 'Sound': 'rain.mp3'},
-          {'Name': 'Birds', 'Image': 'birds', 'Sound': 'birds.mp3'},
+          {'Name': 'Bird', 'Image': 'birds', 'Sound': 'birds.mp3'},
           {'Name': 'Traffic', 'Sound': 'city.mp3'},
           {'Name': 'Siren', 'Sound': 'ambulance.mp3'},
           {'Name': 'Heli','Image':'helicopter' ,'Sound': 'helicopter.mp3'}]},
         {'Name':'Field','Image':'field.gif','Sound':null, 'Assets': [
           {'Name': 'Breeze', 'Sound': 'breeze.mp3'},
-          {'Name': 'Birds', 'Image': 'birds','Sound': 'birds.mp3'},
+          {'Name': 'Bird', 'Image': 'birds','Sound': 'birds.mp3'},
           {'Name': 'River', 'Sound': 'river.mp3'}
         ]},
         {'Name':'Beach','Image':'beach.jpg','Sound':null, 'Assets': [
