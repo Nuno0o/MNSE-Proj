@@ -100,7 +100,7 @@ export default {
           width: 450,
           sources: [{
             type: "video/mp4",
-            src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
+            src: "https://nofile.io/g/xVB0g7lVo3kGaFi8ndcEfN4QLUvurPjaSGhqRXwW7VJ9ynUStt7w60KVhe5eypRB/MnseTutorial.mp4"
           }],
           poster: "/static/images/author.jpg",
       },
